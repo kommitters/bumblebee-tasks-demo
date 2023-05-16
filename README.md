@@ -1,6 +1,12 @@
-# .template
+# **Bumblebee Tasks Demo**
 
-Template repository to create new projects for the @kommitters organization.
+Welcome to the Bumblebee Task Examples repository! This repository aims to provide a comprehensive collection of examples showcasing the various types of tasks that can be developed using the Bumblebee library.
+
+### **About Bumblebee**
+
+**Bumblebee** **is a** versatile library that offers a wide range of features for building and utilizing **pre-trained machine-learning Axon models**. Additionally, Bumblebee offers configurable Axon models, which serve as high-level interfaces for creating neural network models.
+
+One of the key benefits of Bumblebee is its seamless integration with the Hugging Face Hub. This feature allows users to easily download and perform machine learning tasks on a variety of models. All Neural Networks models can be compiled to the CPU/GPU, thanks to projects such as [EXLA](https://github.com/elixir-nx/nx/tree/main/exla) (based on Google XLA) and [Torchx](https://github.com/elixir-nx/nx/tree/main/torchx) (based on Libtorch).
 
 ## Changelog
 
