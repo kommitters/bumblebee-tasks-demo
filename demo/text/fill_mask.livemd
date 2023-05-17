@@ -1,0 +1,52 @@
+# Fill mask
+
+```elixir
+Mix.install(
+  [
+    {:kino_bumblebee, "~> 0.3.0"},
+    {:exla, "~> 0.5.1"}
+  ],
+  config: [nx: [default_backend: EXLA.Backend]]
+)
+```
+
+## Using bert-base-uncased model
+
+```elixir
+
+```
+
+<!-- livebook:{"attrs":{"compiler":"exla","sequence_length":100,"task_id":"fill_mask","top_k":null,"variant_id":"bert_base_uncased"},"chunks":[[0,292],[294,702]],"kind":"Elixir.KinoBumblebee.TaskCell","livebook_object":"smart_cell"} -->
+
+```elixir
+{:ok, model_info} = Bumblebee.load_model({:hf, "bert-base-uncased"})
+{:ok, tokenizer} = Bumblebee.load_tokenizer({:hf, "bert-base-uncased"})
+
+serving =
+  Bumblebee.Text.fill_mask(model_info, tokenizer,
+    compile: [batch_size: 1, sequence_length: 100],
+    defn_options: [compiler: EXLA]
+  )
+
+text_input = Kino.Input.textarea("Text", default: "Paris is the [MASK] of France.")
+form = Kino.Control.form([text: text_input], submit: "Run")
+frame = Kino.Frame.new()
+
+Kino.listen(form, fn %{data: %{text: text}} ->
+  one_mask? = match?([_, _], String.split(text, "[MASK]"))
+
+  if one_mask? do
+    Kino.Frame.render(frame, Kino.Text.new("Running..."))
+    output = Nx.Serving.run(serving, text)
+
+    output.predictions
+    |> Enum.map(&{&1.token, &1.score})
+    |> Kino.Bumblebee.ScoredList.new()
+    |> then(&Kino.Frame.render(frame, &1))
+  else
+    Kino.Frame.render(frame, Kino.Text.new("The text must include exactly one [MASK]."))
+  end
+end)
+
+Kino.Layout.grid([form, frame], boxed: true, gap: 16)
+```

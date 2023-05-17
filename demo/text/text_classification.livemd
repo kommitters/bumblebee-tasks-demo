@@ -1,0 +1,47 @@
+# Text classification
+
+```elixir
+Mix.install(
+  [
+    {:kino_bumblebee, "~> 0.3.0"},
+    {:exla, "~> 0.5.1"}
+  ],
+  config: [nx: [default_backend: EXLA.Backend]]
+)
+```
+
+## Using finiteautomata/bertweet-base-emotion-analysis model
+
+```elixir
+
+```
+
+<!-- livebook:{"attrs":{"compiler":"exla","sequence_length":100,"task_id":"text_classification","top_k":null,"variant_id":"roberta_bertweet_emotion"},"chunks":[[0,335],[337,507]],"kind":"Elixir.KinoBumblebee.TaskCell","livebook_object":"smart_cell"} -->
+
+```elixir
+{:ok, model_info} = Bumblebee.load_model({:hf, "finiteautomata/bertweet-base-emotion-analysis"})
+
+{:ok, tokenizer} = Bumblebee.load_tokenizer({:hf, "vinai/bertweet-base"})
+
+serving =
+  Bumblebee.Text.text_classification(model_info, tokenizer,
+    compile: [batch_size: 1, sequence_length: 100],
+    defn_options: [compiler: EXLA]
+  )
+
+text_input = Kino.Input.textarea("Text", default: "Oh wow, I didn't know that!")
+form = Kino.Control.form([text: text_input], submit: "Run")
+frame = Kino.Frame.new()
+
+Kino.listen(form, fn %{data: %{text: text}} ->
+  Kino.Frame.render(frame, Kino.Text.new("Running..."))
+  output = Nx.Serving.run(serving, text)
+
+  output.predictions
+  |> Enum.map(&{&1.label, &1.score})
+  |> Kino.Bumblebee.ScoredList.new()
+  |> then(&Kino.Frame.render(frame, &1))
+end)
+
+Kino.Layout.grid([form, frame], boxed: true, gap: 16)
+```
