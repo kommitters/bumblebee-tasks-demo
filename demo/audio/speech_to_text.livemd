@@ -1,4 +1,4 @@
-# Spech-to-text
+# Speech-to-text
 
 ```elixir
 Mix.install(
