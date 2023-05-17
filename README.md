@@ -1,6 +1,16 @@
-# .template
+# **Bumblebee Tasks Demo**
 
-Template repository to create new projects for the @kommitters organization.
+Welcome to the Bumblebee Task Examples repository! This repository aims to provide a comprehensive collection of examples showcasing the various types of tasks that can be developed using the Bumblebee library.
+
+# **Examples**
+
+## **Audio task**
+
+## **Diffusion task**
+
+## **Text task**
+
+## **Vision task**
 
 ## Changelog
 
