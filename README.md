@@ -6,11 +6,40 @@ Welcome to the Bumblebee Task Examples repository! This repository aims to provi
 
 ## **Audio task**
 
+### **Spech-to-text**
+![](.github/images/speech_to_text.png)
+
 ## **Diffusion task**
 
 ## **Text task**
+### **Conversation**
+![](.github/images/conversation.png)
+
+### **Fill mask**
+![](.github/images/fill_mask.png)
+
+### **Question answering**
+![](.github/images/question_answering.png)
+
+### **Text generation**
+![](.github/images/text_generation.png)
+
+### **Text classification**
+![](.github/images/text_classification.png)
+
+### **Token classification**
+![](.github/images/token_classification.png)
+
+### **Zero-Shot classification**
+![](.github/images/zero_shot_text_classification.png)
 
 ## **Vision task**
+
+### **Image classification**
+![](.github/images/image_classification.png)
+
+### **Image to text**
+![](.github/images/image_to_text.png)
 
 ## Changelog
 
